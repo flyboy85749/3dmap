@@ -3,14 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>3D Mapping Tutorial .net magaazine</title>
+    <title>3D Mapping Example</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <!--    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>-->
+    <script src="https://cdn-webgl.wrld3d.com/wrldjs/dist/latest/wrld.js"></script>
     <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif|Roboto:400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/design.css" />
-    <!-- add leaflet.js library links -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css">
-    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
-    <script src="https://cdn-webgl.eegeo.com/eegeojs/early_access/latest/eegeo.js"></script>
 </head>
 
 <body>
@@ -25,40 +24,62 @@
         </nav>
     </header>
     <div class="master-grid">
-        <div id="map" class="col" style="height: 250px"></div>
+        <div id="map" class="col"></div>
         <div id="panel" class="col">
-            <h2>Get in Touch</h2>
-            <p class="comm"><img src="img/mail.png" class="icon">Please contact us if you have any concerns
-                about attending the conference that are not addressed on the site:</p>
+            <h2>Get in touch</h2>
+            <p class="comm"><img src="img/mail.png" class="icon">Please contact us if you have any concerns about attending the conference that are not addressed on the site:</p>
+
+            <form>
+                <div>
+                    <input type="text" id="name" name="name" value="Name">
+                </div>
+                <div>
+                    <input type="text" id="email" name="email" value="Email">
+                </div>
+                <div class="msg">
+                    <textarea cols="20" rows="4" id="msg" name="msg">Message</textarea>
+                    <br>
+                    <input id="submit" type="submit" value="Send">
+                </div>
+            </form>
+            <p class="comm"><img src="img/phone.png" class="icon"><a href="tel:123-456-7890" class="tel"><strong>123-456-7890</strong></a>
+                <br>123 City Street, Marshall City,
+                <br> NY 012345</p>
         </div>
     </div>
-    <form>
-        <div>
-            <input type="text" id="name" name="name" value="Name">
-        </div>
-        <div>
-            <input type="text" id="email" name="email" value="Email">
-        </div>
-        <div class="msg">
-            <textarea cols="20" rows="4" id="msg" name="msg">Message</textarea>
-            <br>
+    <script>
+        let map = L.Wrld.map('map', '4232d73d03b3bbb9d7c81ce5c4e33070', {
+            center: [32.2226, 110.9747],
+            zoom: 13
+        });
 
-            <input id="submit" type="submit" value="Send">
-        </div>
-    </form>
-<p class="comm"><img src="img/phone.png" class="icon"><a href=""tel:123-456-7890z" class="tel"><strong>123-456-7890</strong></a>
-<br>
-123 City Street, Marshall City,<br>NY 012345</p>
-<!-- add leaflet js code  -->
-<script>
-    let map = L.eeGeo.map('map', '531816a659d4a257c6abffd85c87261e', {
-        center: [37.784532, -122.400426],
-        zoom: 13
-    });
-    L.tile.Layer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy;<a href="http://osm.org/copyright">OpenStreetMap</a>contributors'
-    }).addTo(map);
-</script>
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        L.control.zoom({
+            position: 'bottomright'
+        }).addTo(map);
+
+        let marker = L.marker([32.2226, 110.9747]).addTo(map);
+
+        marker.bindPopup("<strong>Create Conference</strong><br> March 21st - 23rd<br>Moscone Center, 747 Howard St,<br> San Francisco, CA 94103");
+
+        //L.Wrld.themes.time.Dawn, L.Wrld.themes.time.Day, L.Wrld.themes.time.Dusk, L.Wrld.themes.time.Night
+        //map.themes.setTime(L.Wrld.themes.time.Night);
+        //L.Wrld.themes.weather.Clear, L.Wrld.themes.weather.Overcast, L.Wrld.themes.weather.Rainy, L.Wrld.themes.weather.Snowy
+        //map.themes.setWeather(L.Wrld.themes.weather.Snowy);
+        //map.themes.setSeason(L.Wrld.themes.season.Winter);
+        //map.themes.setTheme(L.Wrld.themes.season.Autumn, L.Wrld.themes.time.Night, L.Wrld.themes.weather.Snowy);
+
+        setTimeout(function() {
+            map.setView([32.2226, 110.9747], 16, {
+                headingDegrees: 340.0,
+                tiltDegrees: 10.0
+            });
+        }, 8000);
+
+    </script>
 </body>
 
 </html>
